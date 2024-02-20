@@ -12,13 +12,16 @@ class UpdateQuerySet(models.QuerySet):
     #     qs = self
     #     return serialize("json", qs, fields=('user', 'content', 'image'))
     
+    # def serializeList(self):
+    #     qs = self
+    #     finall_array = []
+    #     for obj in qs:
+    #         stuct = json.loads(obj.serializeDetail())
+    #         finall_array.append(stuct)
+    #     return json.dumps(finall_array)
     def serializeList(self):
-        qs = self
-        finall_array = []
-        for obj in qs:
-            stuct = json.loads(obj.serializeDetail())
-            finall_array.append(stuct)
-        return json.dumps(finall_array)
+        data = list(self.values('user', 'content', 'image'))
+        return json.dumps(data)
     
 
 class UpdateManager(models.Manager):
@@ -35,9 +38,17 @@ class Update(models.Model):
 
     objects = UpdateManager()
 
+    # def serializeDetail(self):
+    #     json_data = serialize("json", [self], fields=('user', 'content', 'image'))
+    #     data = json.dumps(json.loads(json_data)[0]['fields'])
+    #     return data
+    
     def serializeDetail(self):
-        json_data = serialize("json", [self], fields=('user', 'content', 'image'))
-        data = json.dumps(json.loads(json_data)[0]['fields'])
-        return data
+        data = {
+            "user": self.user.id,
+            "content": self.content,
+            "image": self.image.url if self.image else ""
+        }
+        return json.dumps(data)
     def __str__(self):
         return self.content or ""
