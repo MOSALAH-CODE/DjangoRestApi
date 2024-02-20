@@ -20,7 +20,7 @@ class UpdateQuerySet(models.QuerySet):
     #         finall_array.append(stuct)
     #     return json.dumps(finall_array)
     def serializeList(self):
-        data = list(self.values('user', 'content', 'image'))
+        data = list(self.values('id', 'user', 'content', 'image'))
         return json.dumps(data)
     
 
@@ -45,6 +45,7 @@ class Update(models.Model):
     
     def serializeDetail(self):
         data = {
+            "id": self.id,
             "user": self.user.id,
             "content": self.content,
             "image": self.image.url if self.image else ""

@@ -15,15 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from updates.views import (json_example, JsonCBV, JsonCBV2, SerilizedDetailView, SerilizedListView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('json/cbv', JsonCBV.as_view()),
-    path('json/cbv2', JsonCBV2.as_view()),
-    path('json/serilized/detail', SerilizedDetailView.as_view()),
-    path('json/serilized/list', SerilizedListView.as_view()),
-    path('json/example', json_example),
+    path("api/updates/", include("updates.api.urls")),
+
+    # path('json/cbv', JsonCBV.as_view()),
+    # path('json/cbv2', JsonCBV2.as_view()),
+    # path('json/serilized/detail', SerilizedDetailView.as_view()),
+    # path('json/serilized/list', SerilizedListView.as_view()),
+    # path('json/example', json_example),
 ]
