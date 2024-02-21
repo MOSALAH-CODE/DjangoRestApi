@@ -1,4 +1,5 @@
 import requests
+import json
 
 BASE_URL = "http://127.0.0.1:8000/"
 END_POINT = "api/updates/"
@@ -14,12 +15,34 @@ def create_update():
         "user": 1,
         "content": "hi there"
     }
-    res = requests.post(BASE_URL + END_POINT , data=new_data)    
+    res = requests.post(BASE_URL + END_POINT , data=json.dumps(new_data))    
     if not res.ok:
         return res.text
     
     return res.json()
 
-# get_list()
+def do_obj_update():
+    new_data = {
+        "user": 1,
+        "content": "hi there"
+    }
+    res = requests.put(BASE_URL + END_POINT + "1/", data=json.dumps(new_data))   # Updating object with id 1
+    if not res.ok:
+        return res.text
     
-print(create_update())
+    return res.json()
+
+def do_obj_delete():
+    res = requests.delete(BASE_URL + END_POINT + "1/")   # Deleting object with id 1
+    if not res.ok:
+        return res.text
+    
+    return res.json()
+
+get_list()
+    
+# print(create_update())
+
+# print(do_obj_update())
+
+# print(do_obj_delete())
