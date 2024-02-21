@@ -24,7 +24,7 @@ def create_update():
 def do_obj_update():
     new_data = {
         "user": 1,
-        "content": "hi there"
+        "content": "new update 123", 
     }
     res = requests.put(BASE_URL + END_POINT + "1/", data=json.dumps(new_data))   # Updating object with id 1
     if not res.ok:
@@ -39,10 +39,13 @@ def do_obj_delete():
     
     return res.json()
 
-get_list()
     
 # print(create_update())
 
 # print(do_obj_update())
 
-# print(do_obj_delete())
+# get_list()
+
+print(do_obj_delete())
+
+get_list()

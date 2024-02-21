@@ -43,8 +43,20 @@ class UpdateModelDetailAPIView(CSRFExemptMixin, HttpResponseMixin, View):
         if not is_valid:
             return self.render_to_response(json.dumps({"message": "Invalid JSON"}), 400)
         
-        new_data = json.loads(request.body)
-        print(new_data['content'])
+        data = json.loads(obj.serializeDetail())
+        passed_data = json.loads(request.body)
+        for key, val in passed_data.items():
+            print(key, val)
+            data[key] = val
+        form = UpdateModelForm(data, instance=obj)
+        
+        if form.is_valid():
+            obj = form.save(commit=True)
+            return self.render_to_response(obj.serializeDetail(), status=201)
+        if form.errors:
+            print("form.errors:{}".format(form.errors))
+            return self.render_to_response(json.dumps(form.errors), status=400)        
+
         json_data = {"message": "hello"}
         return self.render_to_response(json.dumps(json_data))
     
@@ -52,7 +64,10 @@ class UpdateModelDetailAPIView(CSRFExemptMixin, HttpResponseMixin, View):
         obj = self.get_obj(id)
         if obj is None:
             return self.render_to_response(json.dumps({"message": "Not found"}), 404)
-        json_data = json.dumps(obj.serializeDetail())
+        
+        deleted_, item_deleted = obj.delete()
+        print(deleted_)
+        json_data = json.dumps({"message": "Deleted {} item successfully".format(item_deleted)})
         return self.render_to_response(json_data)
     
 class UpdateModelListAPIView(CSRFExemptMixin, HttpResponseMixin, View):
@@ -67,8 +82,8 @@ class UpdateModelListAPIView(CSRFExemptMixin, HttpResponseMixin, View):
         is_valid = is_json(request.body)
         if not is_valid:
             return self.render_to_response(json.dumps({"message": "Invalid JSON"}), 400)
-        data = json.loads(request.body)
-        form = UpdateModelForm(data)
+        passed_data = json.loads(request.body)
+        form = UpdateModelForm(passed_data)
         
         if form.is_valid():
             obj = form.save(commit=True)

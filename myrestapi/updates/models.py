@@ -5,6 +5,8 @@ from django.core.serializers import serialize
 import json
 
 def upload_update_image(instance, filename):
+    print("Uploading image")
+    print(instance, filename)
     return "updates/{user}/{filename}".format(user=instance, filename=filename)
 
 class UpdateQuerySet(models.QuerySet):
