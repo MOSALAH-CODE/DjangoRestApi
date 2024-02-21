@@ -1,7 +1,7 @@
 import requests
 
 BASE_URL = "http://127.0.0.1:8000/"
-END_POINT = "api/updates"
+END_POINT = "api/updates/"
 
 def get_list():
     res = requests.get(BASE_URL + END_POINT)
@@ -12,14 +12,14 @@ def get_list():
 def create_update():
     new_data = {
         "user": 1,
-        "content": "new update"
+        "content": "hi there"
     }
-    res = requests.post(BASE_URL + END_POINT + "/", data=new_data)    
+    res = requests.post(BASE_URL + END_POINT , data=new_data)    
     if not res.ok:
-        raise Exception("Couldn't create a new update")
+        return res.text
     
-    print(res.json())
+    return res.json()
 
 # get_list()
     
-create_update()
+print(create_update())
