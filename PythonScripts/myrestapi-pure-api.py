@@ -14,15 +14,11 @@ def create_update():
         "user": 1,
         "content": "new update"
     }
-
-    res = requests.post(BASE_URL + END_POINT, data=new_data)
-    print(res.headers)
+    res = requests.post(BASE_URL + END_POINT + "/", data=new_data)    
     if not res.ok:
-        # print(res.text)
-        print(res.status_code)
         raise Exception("Couldn't create a new update")
     
-    print("Created an update with id", res.json()["id"])
+    print(res.json())
 
 # get_list()
     

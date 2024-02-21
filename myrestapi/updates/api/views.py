@@ -5,6 +5,8 @@ from django.http.response import HttpResponse
 
 from .mixins import CSRFExemptMixin
 
+import json
+
 class UpdateModelDetailAPIView(View):
     def get(self, request, id, *args, **kwargs):
         obj = UpdateModel.objects.get(id=id)
@@ -27,5 +29,5 @@ class UpdateModelListAPIView(CSRFExemptMixin, View):
         return HttpResponse(json_data, content_type='application/json')
     
     def post(self, request, *args, **kwargs):
-        data = {"msg": "creat update"}
-        return HttpResponse(data, content_type='application/json')
+        data = {"msg": "create update"}
+        return HttpResponse(json.dumps(data), content_type='application/json')
