@@ -5,3 +5,4 @@ pyvenv.cfg
 myrestapi/myrestapi/__pycache__
 myrestapi/updates/__pycache__
 myrestapi/updates/migrations
+myrestapi/updates/api/__pycache__
