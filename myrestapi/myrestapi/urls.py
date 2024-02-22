@@ -22,6 +22,7 @@ from updates.views import (json_example, JsonCBV, JsonCBV2, SerilizedDetailView,
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/updates/", include("updates.api.urls")),
+    path("api/status/", include("status.api.urls")),
 
     # path('json/cbv', JsonCBV.as_view()),
     # path('json/cbv2', JsonCBV2.as_view()),
