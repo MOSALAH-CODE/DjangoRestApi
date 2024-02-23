@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.conf.urls.static import static
+from django.conf import settings
 from updates.views import (json_example, JsonCBV, JsonCBV2, SerilizedDetailView, SerilizedListView)
 
 urlpatterns = [
@@ -29,4 +30,4 @@ urlpatterns = [
     # path('json/serilized/detail', SerilizedDetailView.as_view()),
     # path('json/serilized/list', SerilizedListView.as_view()),
     # path('json/example', json_example),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
