@@ -133,7 +133,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-server', 'media-root') # '/Users/cfe/dev/restapi/'
-MEDIA_URL = '/static-server/media-root/'
-
-from myrestapi.restconf.main import *
-
+MEDIA_URL = '/media/'
