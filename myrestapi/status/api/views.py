@@ -27,7 +27,7 @@ class StatusAPIDetailView(
     permission_classes          = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class            = StatusSerializer
     queryset                    = Status.objects.all()
-    lookup_field                = 'id'
+    # lookup_field                = 'id'
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
@@ -51,7 +51,7 @@ class StatusAPIDetailView(
 class StatusAPIView(
     mixins.CreateModelMixin, 
     generics.ListAPIView): 
-    permission_classes          = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes          = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class            = StatusSerializer
     # queryset                    = Status.objects.all()
 

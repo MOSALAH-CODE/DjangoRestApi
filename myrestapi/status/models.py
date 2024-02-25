@@ -1,4 +1,4 @@
-from django.conf.global_settings import AUTH_USER_MODEL
+from django.conf import settings
 from django.db import models
 
 
@@ -16,7 +16,7 @@ class StatusManager(models.Manager):
     
 
 class Status(models.Model):
-    user         = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user         = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content      = models.TextField(blank=True, null=True)
     image        = models.ImageField(upload_to=upload_status_image, null=True, blank=True)  # Django Storages --> AWS S3
     updated_at   = models.DateTimeField(auto_now=True)

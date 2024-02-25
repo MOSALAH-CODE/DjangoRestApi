@@ -3,11 +3,46 @@ import requests
 import os
 
 
+AUTH_ENDPOINT = "http://127.0.0.1:8000/api/auth/"
+REFRESH_ENDPOINT = AUTH_ENDPOINT + "refresh"
 ENDPOINT = "http://127.0.0.1:8000/api/status/"
 
 image_path = os.path.join(os.getcwd(), "logo.jpg")
 
-get_endpoint =  ENDPOINT + str(15) + "/"
+headers = {
+    "Content-Type": "application/json"
+}
+
+data = {
+    'email': 'm.salah@example.com',
+    'password': 'password'
+}
+
+r = requests.post(AUTH_ENDPOINT + "login", data=json.dumps(data), headers=headers)
+token = r.json()
+
+# print(token['access_token'])
+# print("*****************************")
+
+refresh_data = {
+    'refresh_token': token['refresh_token']
+}
+
+new_response = requests.post(REFRESH_ENDPOINT, data=json.dumps(refresh_data), headers=headers)
+new_token = new_response.json()
+# print(new_response.text)
+
+# print(new_token['access_token'])
+# print("*****************************")
+
+
+post_headers = {
+    "Content-type": "application/json",
+    "Authorization": f"JWT {new_token['access_token']}"
+}
+
+get_endpoint =  ENDPOINT + str(12)
+post_data = json.dumps({"content": "Some random content"})
 
 
 # r = requests.get(get_endpoint)
@@ -16,20 +51,10 @@ get_endpoint =  ENDPOINT + str(15) + "/"
 
 
 # r2 = requests.get(ENDPOINT)
-# print(r2.text)
-
-
-
-post_headers = {
-    'content-type': 'application/json'
-}
-post_data = json.dumps({
-    "user": 1,
-    "content": "Some random content"
-    })
+# print(r2.status_code)
 
 post_response = requests.post(ENDPOINT, data=post_data, headers=post_headers)
-print(post_response.status_code)
+print(post_response.text)
 
 
 
